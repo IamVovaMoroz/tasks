@@ -10,23 +10,29 @@ import {
   deleteProductById,
   productAddByRequest,
   getAllUsers,
-  getUserById
+  getUserById,
+  getCardById,
+  getPostById,
+  getPostsByIdUser
 } from './requests/products'
 import {
   createProductListMarkup,
   createProductMarkup,
   createNewProductMarkup,
   createAllUsersListMarkup,
-  findUserByIdMarkup
+  findUserByIdMarkup,
+  createCardMarkup,
+  createPostMarkup,
+  createPostsMarkup
 } from './services/markupService'
 
 // Задача 1 получение всех продуктов
-const allProductsList = document.querySelector('#allProducts')
-// console.log(allProductsList)
+// const allProductsList = document.querySelector('#allProducts')
+// // console.log(allProductsList)
 
-getAllProducts().then(({ data: { products } }) => {
-  allProductsList.innerHTML = createProductListMarkup(products)
-})
+// getAllProducts().then(({ data: { products } }) => {
+//   allProductsList.innerHTML = createProductListMarkup(products)
+// })
 
 // getAllProducts()
 //   .then(res => console.log(res.data.products[2].brand))
@@ -57,28 +63,27 @@ getAllProducts().then(({ data: { products } }) => {
 
 // // Задача 3 добавление информации по товару и вывод на нашу разметку новых данных
 
-const formNewProduct = document.querySelector('#new-product')
-const newProductSection = document.querySelector('#newProductSection')
+// const formNewProduct = document.querySelector('#new-product')
+// const newProductSection = document.querySelector('#newProductSection')
 
-formNewProduct.addEventListener('submit', onFormNewProductSubmit)
+// formNewProduct.addEventListener('submit', onFormNewProductSubmit)
 
-function onFormNewProductSubmit (event) {
-  event.preventDefault()
+// function onFormNewProductSubmit (event) {
+//   event.preventDefault()
 
-  const newTitle = event.target.elements.title.value.trim()
-  const newDescription = event.target.elements.description.value.trim()
-  const newPrice = event.target.elements.price.value.trim()
+//   const title = event.target.elements.title.value.trim()
+//   const description = event.target.elements.description.value.trim()
+//   const price = event.target.elements.price.value.trim()
 
-  productAddByRequest(newTitle).then(({ data }) => {
-    function createNewProductMarkup (product) {
-      return `<p> Model: ${product.title}</p><p>Description: ${product.description}</p><p>Price: ${product.price}$</p>
-      
-      
-      `
-    }
-    newProductSection.innerHTML = createNewProductMarkup(data)
-  })
-}
+//   productAddByRequest({ title, description, price }).then(({ data }) => {
+//     function createNewProductMarkup (product) {
+//       return `<p> Model: ${product.title}</p><p>Description: ${product.description}</p><p>Price: ${product.price}$</p>
+
+//       `
+//     }
+//     newProductSection.innerHTML = createNewProductMarkup(data)
+//   })
+// }
 // formNewProduct.addEventListener('submit', onNewProductSubmit);
 
 // // function onNewProductSubmit(event) {
@@ -165,3 +170,61 @@ function onFormNewProductSubmit (event) {
 //     )
 //     .join('')
 // }
+
+// Задача 7:
+// Получи и отрендери список карт по ID пользователя.
+
+// const cardForm = document.querySelector('#userCartsForm')
+// const cardPlace = document.querySelector('#carts')
+
+// cardForm.addEventListener('submit', onCardFormSubmit)
+
+// function onCardFormSubmit (event) {
+//   event.preventDefault()
+
+//   const inputValueCard = event.target.elements.userId.value
+
+//   // console.log(inputValue)
+
+//   getCardById(inputValueCard).then(({ data }) => {
+//     console.log(data)
+//     // cardPlace.innerHTML = createCardMarkup(data)
+//   })
+// }
+
+// Задача 8a:
+// Получи пост по ID и отрендери его.
+
+// const postForm = document.querySelector('#userPostForm')
+// const postPlace = document.querySelector('#posts')
+
+// postForm.addEventListener('submit', onPostFormSubmit)
+
+// function onPostFormSubmit (event) {
+//   event.preventDefault()
+//   // userId - input name="userId"
+//   const inputIdPost = event.target.elements.userId.value
+//   // console.log(inputIdPost)
+//   getPostById(inputIdPost).then(({ data }) => {
+//     console.log(data)
+//     postPlace.innerHTML = createPostMarkup(data)
+//   })
+// }
+
+// Задача 8
+// Получи и отрендери список постов по ID пользователя.
+const postsForm = document.querySelector('#userPostsForm')
+const postsPlace = document.querySelector('#posts')
+
+postsForm.addEventListener('submit', onPostsFormSubmit)
+
+function onPostsFormSubmit (event) {
+  event.preventDefault()
+  // userId - input name="userId"
+  const inputIdUserPost = event.target.elements.userId.value
+  console.log(inputIdUserPost)
+  getPostsByIdUser(inputIdUserPost).then(({ data }) => {
+    console.log(data)
+    postsPlace.innerHTML = createPostsMarkup(data)
+  })
+}
