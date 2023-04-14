@@ -4,6 +4,7 @@ import './styles/index.css'
 import { getUserByName } from './requests/products'
 
 import {
+  getMoviesByName,
   getAllProducts,
   getProductById,
   productAdd,
@@ -25,6 +26,8 @@ import {
   createPostMarkup,
   createPostsMarkup
 } from './services/markupService'
+
+// ---------------------------------
 
 // Задача 1 получение всех продуктов
 // const allProductsList = document.querySelector('#allProducts')
@@ -188,7 +191,7 @@ import {
 
 //   getCardById(inputValueCard).then(({ data }) => {
 //     console.log(data)
-//     // cardPlace.innerHTML = createCardMarkup(data)
+//     cardPlace.innerHTML = createCardMarkup(data)
 //   })
 // }
 
@@ -213,18 +216,39 @@ import {
 
 // Задача 8
 // Получи и отрендери список постов по ID пользователя.
-const postsForm = document.querySelector('#userPostsForm')
-const postsPlace = document.querySelector('#posts')
+// const postsForm = document.querySelector('#userPostsForm')
+// const postsPlace = document.querySelector('#posts')
 
-postsForm.addEventListener('submit', onPostsFormSubmit)
+// postsForm.addEventListener('submit', onPostsFormSubmit)
 
-function onPostsFormSubmit (event) {
+// function onPostsFormSubmit (event) {
+//   event.preventDefault()
+//   // userId - input name="userId"
+//   const inputIdUserPost = event.target.elements.userId.value
+//   console.log(inputIdUserPost)
+//   getPostsByIdUser(inputIdUserPost).then(({ data }) => {
+//     console.log(data)
+//     postsPlace.innerHTML = createCardMarkup(data)
+//   })
+// }
+
+const searchBarForm = document.querySelector('#searchBar-form')
+// console.log(searchBarForm)
+const allMoviesPlace = document.querySelector('#allMoviesPlace')
+// console.log(allMoviesPlace)
+
+searchBarForm.addEventListener('submit', onSearchBarFormSubmit)
+
+function onSearchBarFormSubmit (event) {
   event.preventDefault()
-  // userId - input name="userId"
-  const inputIdUserPost = event.target.elements.userId.value
-  console.log(inputIdUserPost)
-  getPostsByIdUser(inputIdUserPost).then(({ data }) => {
-    console.log(data)
-    postsPlace.innerHTML = createPostsMarkup(data)
-  })
+
+  const onSearchBarInput = event.target.elements.searchBarInput.value
+  console.log(onSearchBarInput)
+  // Обьект получаем
+  getMoviesByName(onSearchBarInput).then(res => console.log(res))
+
+  //  Рендерим в разметку
+  // allMoviesPlace.innerHTML = getMoviesByName(data)
 }
+
+// then(({ data: { results } })
